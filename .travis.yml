@@ -5,6 +5,7 @@ cache:
     - $HOME/kcov-x86_64-unknown-linux-gnu
     - $HOME/android/android-sdk-linux
     - $HOME/android/android-18-arm-linux-androideabi-4.8
+    - $HOME/android/android-21-arm64-linux-android-4.9
 matrix:
   fast_finish: true
   allow_failures:
@@ -290,6 +291,58 @@ matrix:
             - g++-aarch64-linux-gnu
             - gcc-aarch64-linux-gnu
             - libc6-dev-arm64-cross
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X=--features=rsa_signing MODE_X=DEBUG KCOV=0
+      rust: stable
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X= MODE_X=DEBUG KCOV=0
+      rust: stable
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X=--features=rsa_signing MODE_X=RELWITHDEBINFO KCOV=0
+      rust: stable
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X= MODE_X=RELWITHDEBINFO KCOV=0
+      rust: stable
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
           sources:
             - ubuntu-toolchain-r-test
 
@@ -846,6 +899,58 @@ matrix:
             - g++-aarch64-linux-gnu
             - gcc-aarch64-linux-gnu
             - libc6-dev-arm64-cross
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X=--features=rsa_signing MODE_X=DEBUG KCOV=0
+      rust: nightly
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X= MODE_X=DEBUG KCOV=0
+      rust: nightly
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X=--features=rsa_signing MODE_X=RELWITHDEBINFO KCOV=0
+      rust: nightly
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X= MODE_X=RELWITHDEBINFO KCOV=0
+      rust: nightly
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
           sources:
             - ubuntu-toolchain-r-test
 
@@ -1406,6 +1511,58 @@ matrix:
             - g++-aarch64-linux-gnu
             - gcc-aarch64-linux-gnu
             - libc6-dev-arm64-cross
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X=--features=rsa_signing MODE_X=DEBUG KCOV=0
+      rust: beta
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X= MODE_X=DEBUG KCOV=0
+      rust: beta
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X=--features=rsa_signing MODE_X=RELWITHDEBINFO KCOV=0
+      rust: beta
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: TARGET_X=aarch64-linux-android CC_X=aarch64-linux-android-gcc CXX_X=aarch64-linux-android-g++ FEATURES_X= MODE_X=RELWITHDEBINFO KCOV=0
+      rust: beta
+      os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - expect
+            - openjdk-6-jre-headless
           sources:
             - ubuntu-toolchain-r-test
 

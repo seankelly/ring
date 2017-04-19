@@ -21,6 +21,9 @@
 # SOFTWARE.
 set -ex
 
+: ${ANDROID_API=18}
+: ${ANDROID_ARCH=arm}
+
 ANDROID_SDK_VERSION=${ANDROID_SDK_VERSION:-24.4.1}
 ANDROID_SDK_URL=https://dl.google.com/android/android-sdk_r${ANDROID_SDK_VERSION}-linux.tgz
 
@@ -29,7 +32,11 @@ ANDROID_NDK_URL=https://dl.google.com/android/repository/android-ndk-r${ANDROID_
 
 ANDROID_INSTALL_PREFIX="${HOME}/android"
 ANDROID_SDK_INSTALL_DIR="${HOME}/android/android-sdk-linux"
-ANDROID_NDK_INSTALL_DIR="${ANDROID_INSTALL_PREFIX}/android-18-arm-linux-androideabi-4.8"
+if [[ $ANDROID_ARCH == arm ]]; then
+  ANDROID_NDK_INSTALL_DIR="${ANDROID_INSTALL_PREFIX}/android-18-arm-linux-androideabi-4.8"
+elif [[ $ANDROID_ARCH == arm64 ]]; then
+  ANDROID_NDK_INSTALL_DIR="${ANDROID_INSTALL_PREFIX}/android-21-arm64-linux-android-4.9"
+fi
 
 if [[ ! -f $ANDROID_SDK_INSTALL_DIR/tools/emulator ]];then
   mkdir -p "${ANDROID_INSTALL_PREFIX}"
@@ -57,8 +64,8 @@ if [[ ! -d $ANDROID_NDK_INSTALL_DIR/sysroot/usr/include/arm-linux-androideabi ]]
 
   ./android-ndk-r${ANDROID_NDK_VERSION}/build/tools/make_standalone_toolchain.py \
 		 --force \
-		 --arch arm \
-		 --api 18 \
+		 --arch $ANDROID_ARCH \
+		 --api $ANDROID_API \
 		 --unified-headers \
 		 --install-dir ${ANDROID_NDK_INSTALL_DIR}
 

@@ -28,9 +28,23 @@ arm-unknown-linux-gnueabihf)
   ;;
 armv7-linux-androideabi)
   # install the android sdk/ndk
+  export ANDROID_ABI=armeabi-v7a
+  export ANDROID_API=18
+  export ANDROID_ARCH=arm
   mk/travis-install-android.sh
 
   export PATH=$HOME/android/android-18-arm-linux-androideabi-4.8/bin:$PATH
+  export PATH=$HOME/android/android-sdk-linux/platform-tools:$PATH
+  export PATH=$HOME/android/android-sdk-linux/tools:$PATH
+  ;;
+aarch64-linux-android)
+  # install the android sdk/ndk
+  export ANDROID_ABI=arm64-v8a
+  export ANDROID_API=21
+  export ANDROID_ARCH=arm64
+  mk/travis-install-android.sh
+
+  export PATH=$HOME/android/android-21-arm64-linux-android-4.9/bin:$PATH
   export PATH=$HOME/android/android-sdk-linux/platform-tools:$PATH
   export PATH=$HOME/android/android-sdk-linux/tools:$PATH
   ;;
@@ -95,6 +109,27 @@ armv7-linux-androideabi)
   android list avd
 
   emulator @arm-18 -memory 2048 -no-skin -no-boot-anim -no-window &
+  adb wait-for-device
+  adb push $target_dir/ring-* /data/ring-test
+  for testfile in `find src crypto -name "*_test*.txt"`; do
+    adb shell mkdir -p /data/`dirname $testfile`
+    adb push $testfile /data/$testfile
+  done
+  adb shell mkdir -p /data/third-party/NIST
+  adb push third-party/NIST/SHAVS /data/third-party/NIST/SHAVS
+  adb shell  'cd /data && ./ring-test' 2>&1 | tee /tmp/ring-test
+  grep "test result: ok" /tmp/ring-test
+  ;;
+aarch64-linux-android)
+  cargo test -vv -j2 --no-run ${mode-} ${FEATURES_X-} --target=$TARGET_X
+
+  # Building the AVD is slow. Do it here, after we build the code so that any
+  # build breakage is reported sooner, instead of being delayed by this.
+  name=$ANDROID_ARCH-$ANDROID_API
+  echo no | android create avd --name "$name" --target android-$ANDROID_API --abi $ANDROID_ABI
+  android list avd
+
+  emulator @$name -memory 2048 -no-skin -no-boot-anim -no-window &
   adb wait-for-device
   adb push $target_dir/ring-* /data/ring-test
   for testfile in `find src crypto -name "*_test*.txt"`; do
